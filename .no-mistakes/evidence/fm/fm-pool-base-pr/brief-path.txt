@@ -1,0 +1,12 @@
+$ FM_HOME=/home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home bash bin/fm-brief.sh evidence-ship sample --mode local-only
+scaffolded: /home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home/data/evidence-ship/brief.md (ship, mode=local-only; replace {TASK} and {FIRSTMATE_SPEC})
+$ FM_HOME=/home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home bash bin/fm-brief.sh evidence-scout sample --scout
+scaffolded: /home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home/data/evidence-scout/brief.md (scout; replace {TASK} and {FIRSTMATE_SPEC})
+
+ship brief path declaration:
+Your brief file lives on disk at '/home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home/data/evidence-ship/brief.md'.
+scout brief path declaration:
+Your brief file lives on disk at '/home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home/data/evidence-scout/brief.md'.
+generated files:
+/home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home/data/evidence-ship/brief.md
+/home/ubuntu/work/1955m/.no-mistakes/evidence/01M1WX0MBJF9PPF7GJGD8MGE3M/brief-home/data/evidence-scout/brief.md

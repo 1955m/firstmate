@@ -1,0 +1,10 @@
+$ fm-spawn.sh pool-local-only-evidence-r2 /tmp/fm-local-only-evidence.D02KRS/local-only/project --mode local-only --yolo off
+warning: /tmp/fm-local-only-evidence.D02KRS/local-only/home/data/pool-local-only-evidence-r2/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode local-only - confirm its definition of done matches
+notice: pool-local-only-evidence-r2 ships mode=local-only while the standing posture for project is no-mistakes - less rigor than the captain's standing posture; proceed only on a current explicit captain instruction or an intake judgment you can state
+spawned pool-local-only-evidence-r2 harness=codex kind=ship mode=local-only yolo=off window=firstmate:fm-pool-local-only-evidence-r2 worktree=/tmp/fm-local-only-evidence.D02KRS/local-only/pool
+exit=0
+primary default tip=03a939e00c1cc4ba55e6cd4ebfee6345c1fafabd
+pool HEAD=03a939e00c1cc4ba55e6cd4ebfee6345c1fafabd
+initial pool base=236445cc083df3f20ed07bc634d8ae4a21fa6853
+advanced content=local-only advanced main
+origin remote configured in pool=no
