@@ -1,0 +1,10 @@
+=== PR body ===
+This is a clean fast-forward prerequisite so captain-owned `1955m/firstmate` main can receive later Firstmate work.
+
+- Merge base: `99533c5d7d3702050e6084429dddff6ea4fe1aa0` (exactly current `1955m/firstmate` main)
+- Captain-owned-main-only commits: 0
+- Upstream commits to fast-forward: 390 (`9bc051ff43c6e4d23c163ee8f1d87551a11050c0`)
+- This branch points exactly at upstream `9bc051ff` and contains no feature work (no `6bb023d1` Lavish/trust commits)
+
+Do not squash. A merge or rebase that is not a fast-forward is unnecessary: `1955m/main` is a strict ancestor of `9bc051ff`.
+

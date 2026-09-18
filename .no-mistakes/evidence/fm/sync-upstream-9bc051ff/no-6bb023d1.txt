@@ -1,0 +1,8 @@
+=== 6bb023d1 not in GitHub PR commit SHAs ===
+matching_sha_prefix_count=0
+=== unique 6bb023d1 files vs parent (feature commit that must be absent) ===
+6bb023d1d0022d78688c8e7baa5b67dee1ac6ca7 no-mistakes(review): Honor explicit saved trust declines on generated Pi copies
+ .../harness-adapters/references/harness/pi.md      |  5 ++-
+ bin/fm-pi-trust.sh                                 | 48 +++++++++++++++-------
+ tests/fm-pi-trust.test.sh                          | 39 ++++++++++++++++--
+ 3 files changed, 71 insertions(+), 21 deletions(-)

@@ -1,0 +1,9 @@
+=== GitHub refs ===
+main: 99533c5d7d3702050e6084429dddff6ea4fe1aa0
+fm/sync-upstream-9bc051ff: 9bc051ff43c6e4d23c163ee8f1d87551a11050c0
+
+=== compare main...fm/sync-upstream-9bc051ff ===
+{"ahead_by":390,"behind_by":0,"html_url":"https://github.com/1955m/firstmate/compare/main...fm/sync-upstream-9bc051ff","merge_base_commit":"99533c5d7d3702050e6084429dddff6ea4fe1aa0","status":"ahead","total_commits":390}
+
+=== PR API ===
+{"base":"main","commits":390,"draft":false,"head":"fm/sync-upstream-9bc051ff","head_sha":"9bc051ff43c6e4d23c163ee8f1d87551a11050c0","html_url":"https://github.com/1955m/firstmate/pull/2","mergeable":true,"mergeable_state":"unstable","merged":false}

@@ -1,0 +1,18 @@
+=== local HEAD ===
+9bc051ff43c6e4d23c163ee8f1d87551a11050c0
+=== exact match to 9bc051ff43c6e4d23c163ee8f1d87551a11050c0 ===
+PASS
+=== merge-base with 99533c5d ===
+99533c5d7d3702050e6084429dddff6ea4fe1aa0
+=== is-ancestor (fast-forward) ===
+PASS_fast_forward
+=== commit count ===
+390
+=== commits on HEAD not in 9bc051ff (must be empty) ===
+(end)
+=== 6bb023d1 ancestor of HEAD? ===
+PASS_absent
+=== 6bb023d1 in range hashes? ===
+0
+=== working tree ===
+(empty means clean)
