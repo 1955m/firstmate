@@ -289,6 +289,18 @@ This does not relax protection for any other untracked file.
 An existing linked-worktree home that predates this rule advances through its marker-only state during its next bootstrap or spawn local sync, after which Git ignores the marker normally.
 A local standalone-clone home cannot receive a primary-local commit through that no-fetch sync, so it receives the rule through `/updatefirstmate`'s origin refresh instead.
 
+## Secondmate private MCP
+
+A seeded second-mate home may keep a private Pi MCP config at `.pi/mcp.json`.
+That file stays in the home.
+Firstmate never copies it or its credentials into a project worktree.
+When the file is present and safe, every Pi or Pi-signed ship or scout that home launches, including relaunches, receives that exact file in Pi exclusive-config mode so global, primary, unrelated-home, and project-local MCP sources cannot leak into the worker.
+The primary home and any home without the second-mate identity marker do not inherit this behavior from merely having `.pi/mcp.json`.
+A second-mate home without the file keeps today's worker launch unchanged.
+If the private file exists but the selected worker runtime cannot inherit it, spawn refuses rather than launching without the required capability.
+Unsafe or escaping files are refused before any endpoint, worktree, or task record exists.
+[`bin/fm-spawn.sh --help`](../bin/fm-spawn.sh) owns the exact file checks, flags, and refusal mechanics.
+
 ## FM_HOME
 
 `FM_HOME` selects the operational home for one firstmate instance.

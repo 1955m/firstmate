@@ -251,6 +251,25 @@
 #   This is an exec environment boundary, not a sandbox for the pane's startup
 #   shell, credential files, same-user processes, or later shell initialization.
 #   See docs/configuration.md for provider/Git setup and supported limits.
+# Secondmate private MCP (.pi/mcp.json):
+#   A genuinely seeded second-mate home (regular-file .fm-secondmate-home
+#   identity marker) that holds a private .pi/mcp.json passes that exact file
+#   to every Pi or Pi-signed ship or scout worker it launches, including
+#   relaunches. The launch receives --mcp-config <absolute-path-to-that-file>
+#   and PI_MCP_CONFIG_MODE=exclusive so global, primary, unrelated-home, and
+#   project-local MCP sources cannot leak into the worker. The file is never
+#   copied into a project worktree. The primary home, and any home without that
+#   identity marker, do not inherit this behavior from merely having
+#   .pi/mcp.json. Absence of the file leaves the worker launch byte-for-byte
+#   unchanged. The file is security-sensitive: it must be a regular,
+#   non-symlink, single-link mode-0600 file whose resolved path stays inside
+#   the second-mate home, and .pi itself must be a real directory there.
+#   Unsafe, malformed, or escaping state refuses before any endpoint, worktree,
+#   or task record exists. If the file is present and the selected worker
+#   harness is not canonical pi or pi-signed, including a raw launch command,
+#   the spawn refuses rather than launching without the required capability.
+#   tmux, herdr, zellij, orca, and cmux all send this same constructed launch
+#   command. __PIMCPFLAG__ below is empty when inheritance does not apply.
 # Claude permission mode (config/claude-permission-mode):
 #   One token selecting the permission flag every claude launch (ship, scout,
 #   secondmate, and relaunch) carries. Absent or `bypass` keeps today's
@@ -267,6 +286,8 @@
 #     __CLAUDEPERMFLAG__ the claude permission flag selected by config/claude-permission-mode
 #     __PIBIN__    quoted concrete Pi-family executable path resolved from PATH
 #     __PITUIMODE__ optional --tui-mode regular when that executable advertises it
+#     __PIMCPFLAG__ optional --mcp-config <absolute home .pi/mcp.json> plus trailing
+#                  space when a seeded second-mate home's private MCP is inherited
 #     __TURNEND__  absolute path to state/<task-id>.turn-ended (for harnesses whose
 #                  turn-end signal rides the launch command, e.g. codex -c notify=[...])
 #     __PIEXT__    absolute path to state/<task-id>.pi-ext.ts (pi turn-end extension,
@@ -1729,7 +1750,7 @@ launch_template() {
     if [ "$kind" = secondmate ]; then
       printf '%s' ' __MODELFLAG____EFFORTFLAG__-e __PITURNEND__ -e __PIWATCH__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
     else
-      printf '%s' ' __MODELFLAG____EFFORTFLAG__-e __PIEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
+      printf '%s' ' __MODELFLAG____EFFORTFLAG____PIMCPFLAG__-e __PIEXT__ "$(__OPINPUT__ encode launch-brief < __BRIEF__)"'
     fi
     ;;
   # omp (Oh My Pi), a Pi fork. Same one-positional-brief, --model, --thinking,
@@ -2372,6 +2393,106 @@ path_is_ancestor_of() {
   return 1
 }
 
+spawn_private_mcp_link_count() {
+  if [ "$(uname -s)" = Darwin ]; then
+    /usr/bin/stat -f %l "$1" 2>/dev/null
+  else
+    stat -c %h "$1" 2>/dev/null
+  fi
+}
+
+spawn_private_mcp_mode() {
+  if [ "$(uname -s)" = Darwin ]; then
+    /usr/bin/stat -f %Lp "$1" 2>/dev/null
+  else
+    stat -c %a "$1" 2>/dev/null
+  fi
+}
+
+# Ship/scout (and relaunch) from a seeded second-mate home: inherit that home's
+# safe private .pi/mcp.json onto canonical Pi workers, or refuse. Header above
+# owns the contract. Leaves PIMCPFLAG and PI_MCP_EXCLUSIVE empty when the home
+# has no private MCP or is not a seeded second mate, so the launch is unchanged.
+spawn_secondmate_private_mcp_prepare() {
+  local home marker mcp pi_dir home_real pi_real mcp_real links mode
+  PIMCPFLAG=
+  PI_MCP_EXCLUSIVE=
+  [ "$KIND" = ship ] || [ "$KIND" = scout ] || return 0
+  home=$FM_HOME
+  marker="$home/$SUB_HOME_MARKER"
+  if [ -L "$marker" ] || [ ! -f "$marker" ]; then
+    return 0
+  fi
+  pi_dir="$home/.pi"
+  mcp="$pi_dir/mcp.json"
+  if [ ! -e "$mcp" ] && [ ! -L "$mcp" ]; then
+    return 0
+  fi
+  home_real=$(CDPATH='' cd -- "$home" && pwd -P) || {
+    echo "error: secondmate home cannot be resolved for private MCP: $home" >&2
+    return 1
+  }
+  if [ -L "$pi_dir" ]; then
+    echo "error: secondmate private MCP directory is a symlink: $pi_dir" >&2
+    return 1
+  fi
+  if [ ! -d "$pi_dir" ]; then
+    echo "error: secondmate private MCP directory is not a directory: $pi_dir" >&2
+    return 1
+  fi
+  pi_real=$(CDPATH='' cd -- "$pi_dir" && pwd -P) || {
+    echo "error: secondmate private MCP directory cannot be resolved: $pi_dir" >&2
+    return 1
+  }
+  if ! path_is_ancestor_of "$home_real" "$pi_real"; then
+    echo "error: secondmate private MCP directory escapes the secondmate home: $pi_dir" >&2
+    return 1
+  fi
+  if [ -L "$mcp" ]; then
+    echo "error: secondmate private MCP is a symlink: $mcp" >&2
+    return 1
+  fi
+  if [ ! -f "$mcp" ]; then
+    echo "error: secondmate private MCP is not a regular file: $mcp" >&2
+    return 1
+  fi
+  links=$(spawn_private_mcp_link_count "$mcp") || {
+    echo "error: secondmate private MCP could not be inspected: $mcp" >&2
+    return 1
+  }
+  if [ "$links" != 1 ]; then
+    echo "error: secondmate private MCP is not a single-link file: $mcp" >&2
+    return 1
+  fi
+  mode=$(spawn_private_mcp_mode "$mcp") || {
+    echo "error: secondmate private MCP mode could not be inspected: $mcp" >&2
+    return 1
+  }
+  case "$mode" in
+  600 | 0600) ;;
+  *)
+    echo "error: secondmate private MCP must be mode 0600: $mcp" >&2
+    return 1
+    ;;
+  esac
+  mcp_real="$pi_real/mcp.json"
+  if [ -L "$mcp_real" ] || [ ! -f "$mcp_real" ]; then
+    echo "error: secondmate private MCP is not a regular file: $mcp" >&2
+    return 1
+  fi
+  if ! path_is_ancestor_of "$home_real" "$mcp_real"; then
+    echo "error: secondmate private MCP escapes the secondmate home: $mcp" >&2
+    return 1
+  fi
+  if [ "$RAW_LAUNCH" != 0 ] || { [ "$HARNESS" != pi ] && [ "$HARNESS" != pi-signed ]; }; then
+    echo "error: this home's private MCP cannot be inherited by harness '${HARNESS:-raw}'; use --harness pi or pi-signed" >&2
+    return 1
+  fi
+  PIMCPFLAG="--mcp-config $(shell_quote "$mcp_real") "
+  PI_MCP_EXCLUSIVE='PI_MCP_CONFIG_MODE=exclusive '
+  return 0
+}
+
 validate_firstmate_home_for_spawn() {
   local id=$1 home=$2 abs_home abs_active_home abs_root marker_id
   abs_home=$(resolved_existing_dir "$home") || return 1
@@ -2541,6 +2662,9 @@ else
   WT=""
   BRIEF="$DATA/$ID/brief.md"
 fi
+PIMCPFLAG=
+PI_MCP_EXCLUSIVE=
+spawn_secondmate_private_mcp_prepare || exit 1
 if [ "$RELAUNCH" -eq 0 ] && [ "$KIND" != secondmate ] && [ "$BACKEND" != orca ]; then
   SPAWN_TREEHOUSE_PROJECT_LOCK=$(fm_treehouse_project_lock_path "$PROJ_ABS") || {
     echo "error: could not resolve the shared Treehouse project lock for $PROJ_ABS" >&2
@@ -4350,6 +4474,7 @@ MODELFLAG=$(model_flag_for_harness "$HARNESS" "$MODEL")
 EFFORTFLAG=$(effort_flag_for_harness "$HARNESS" "$EFFORT" "$MODEL") || exit 1
 LAUNCH=${LAUNCH//__MODELFLAG__/$MODELFLAG}
 LAUNCH=${LAUNCH//__EFFORTFLAG__/$EFFORTFLAG}
+LAUNCH=${LAUNCH//__PIMCPFLAG__/${PIMCPFLAG:-}}
 LAUNCH=${LAUNCH//__CLAUDEPERMFLAG__/$CLAUDE_PERM_FLAG}
 if [ "$HARNESS" = rovo ]; then
   ROVOCONFIGOVERRIDE=$(rovo_config_override_flag "$EFFORT" "$DATA" "$STATE" "$ID") || {
@@ -4414,6 +4539,9 @@ if [ "$KIND" = secondmate ]; then
 fi
 if [ -z "$SPAWN_TRACEPARENT" ] && [ "$RELAUNCH" -eq 1 ]; then
   LAUNCH="unset TRACEPARENT; $LAUNCH"
+fi
+if [ -n "${PI_MCP_EXCLUSIVE:-}" ]; then
+  LAUNCH="${PI_MCP_EXCLUSIVE}$LAUNCH"
 fi
 
 spawn_record_traceparent() {
