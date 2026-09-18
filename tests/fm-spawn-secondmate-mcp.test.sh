@@ -10,7 +10,6 @@ set -u
 # shellcheck source=tests/fixtures.sh
 . "$(dirname "${BASH_SOURCE[0]}")/fixtures.sh"
 
-SPAWN="$ROOT/bin/fm-spawn.sh"
 TMP_ROOT=$(fm_test_tmproot fm-spawn-secondmate-mcp)
 
 make_spawn_pi_probe() {
@@ -20,6 +19,13 @@ make_spawn_pi_probe() {
 set -u
 if [ "${1:-}" = --help ]; then
   printf '%s\n' 'Pi 0.84.0' 'Options: --help --tui-mode <mode>'
+  exit 0
+fi
+if [ -n "${FM_FAKE_PI_ENV_LOG:-}" ]; then
+  {
+    printf 'PI_MCP_CONFIG_MODE=%s\n' "${PI_MCP_CONFIG_MODE:-}"
+    printf 'argv=%s\n' "$*"
+  } >> "$FM_FAKE_PI_ENV_LOG"
 fi
 exit 0
 SH
@@ -138,7 +144,7 @@ run_mcp_spawn() {
   local home=$1 wt=$2 fakebin=$3 launchlog=$4
   shift 4
   : > "$launchlog"
-  CLAUDE_CONFIG_DIR= \
+  CLAUDE_CONFIG_DIR='' \
     FM_FAKE_LAUNCH_LOG="$launchlog" \
     FM_FAKE_WINDOWS_FILE="${FM_FAKE_WINDOWS_FILE:-}" \
     FM_FAKE_ENDPOINT_CREATED="${FM_FAKE_ENDPOINT_CREATED:-}" \
@@ -191,8 +197,8 @@ test_scoped_pi_worker_inheritance() {
 }
 
 test_relaunch_inherits_private_mcp() {
-  local rec id out status launch mcp launchlog windows
-  id=mcp-relaunch-z2
+  local rec id out status launch mcp launchlog windows envlog childenv
+  id='mcp-relaunch-z2'
   rec=$(make_mcp_case relaunch-pi pi "$id")
   read_mcp_case "$rec"
   mark_secondmate_home "$HOME_DIR" mcp-sm
@@ -218,12 +224,21 @@ test_relaunch_inherits_private_mcp() {
     "relaunch must keep exclusive-config mode"
   assert_contains "$launch" "--mcp-config $(printf "'%s'" "$mcp")" \
     "relaunch must pass the same parent home MCP file"
+  envlog="$CASE_DIR/pi-env.log"
+  : > "$envlog"
+  PATH="$FAKEBIN_DIR:$PATH" FM_FAKE_PI_ENV_LOG="$envlog" bash -c "$launch" ||
+    fail "relaunch launch command did not execute"
+  childenv=$(cat "$envlog")
+  assert_contains "$childenv" "PI_MCP_CONFIG_MODE=exclusive" \
+    "relaunched Pi child must actually receive exclusive-config mode"
+  assert_contains "$childenv" "--mcp-config $mcp" \
+    "relaunched Pi child must actually receive the scoped MCP path"
   pass "worker relaunch inherits the second-mate private MCP"
 }
 
 test_primary_home_does_not_inherit() {
   local rec id out status launch launchlog
-  id=mcp-primary-z3
+  id='mcp-primary-z3'
   rec=$(make_mcp_case primary-no-inherit pi "$id")
   read_mcp_case "$rec"
   write_safe_mcp "$HOME_DIR/.pi/mcp.json"
@@ -242,7 +257,7 @@ test_primary_home_does_not_inherit() {
 
 test_unrelated_home_isolation() {
   local rec id out status launch mcp_a mcp_b other launchlog
-  id=mcp-isolate-z4
+  id='mcp-isolate-z4'
   rec=$(make_mcp_case isolate-a pi "$id")
   read_mcp_case "$rec"
   mark_secondmate_home "$HOME_DIR" mcp-a
@@ -268,7 +283,7 @@ test_unrelated_home_isolation() {
 
 test_no_config_keeps_existing_launch() {
   local rec id out status launch launchlog
-  id=mcp-noconfig-z5
+  id='mcp-noconfig-z5'
   rec=$(make_mcp_case noconfig-sm pi "$id")
   read_mcp_case "$rec"
   mark_secondmate_home "$HOME_DIR" mcp-sm
@@ -289,7 +304,7 @@ test_no_config_keeps_existing_launch() {
 
 test_unsafe_mcp_refuses_before_mutation() {
   local rec id out status launchlog endpoint outside
-  id=mcp-unsafe-z6
+  id='mcp-unsafe-z6'
   rec=$(make_mcp_case unsafe-symlink pi "$id")
   read_mcp_case "$rec"
   mark_secondmate_home "$HOME_DIR" mcp-sm
@@ -361,7 +376,7 @@ test_unsafe_mcp_refuses_before_mutation() {
 
 test_non_pi_refuses_when_inheritance_cannot_be_guaranteed() {
   local rec id out status launchlog endpoint
-  id=mcp-nonpi-z7
+  id='mcp-nonpi-z7'
   rec=$(make_mcp_case nonpi-claude claude "$id")
   read_mcp_case "$rec"
   mark_secondmate_home "$HOME_DIR" mcp-sm
