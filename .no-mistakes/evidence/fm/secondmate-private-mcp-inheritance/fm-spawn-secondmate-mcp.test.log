@@ -1,0 +1,11 @@
+FM_TEST_BEGIN 2026-09-18T09:28:34Z tests/fm-spawn-secondmate-mcp.test.sh family=unclassified expected_gate_skip=none
+ok - seeded second-mate Pi workers inherit the home MCP in exclusive mode
+ok - worker relaunch inherits the second-mate private MCP
+ok - primary homes do not inherit merely because .pi/mcp.json exists
+ok - unrelated second-mate homes cannot leak MCP config into each other's workers
+ok - second-mate homes without private MCP keep the existing worker launch
+ok - unsafe private MCP refuses before endpoint, worktree, or task record mutation
+ok - non-Pi workers are refused rather than launched without required MCP capability
+# all fm-spawn-secondmate-mcp tests passed
+FM_TEST_END 2026-09-18T09:28:48Z tests/fm-spawn-secondmate-mcp.test.sh exit=0 duration_ms=13827 gate_skip=false
+FM_TEST_SUMMARY total=1 failed=0 skipped_gate=0 duration_ms=13883

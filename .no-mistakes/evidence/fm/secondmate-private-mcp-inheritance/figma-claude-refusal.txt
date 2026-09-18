@@ -1,0 +1,1 @@
+error: this home's private MCP cannot be inherited by harness 'claude'; use --harness pi or pi-signed

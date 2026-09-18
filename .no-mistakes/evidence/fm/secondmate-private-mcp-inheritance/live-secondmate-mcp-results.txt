@@ -1,0 +1,34 @@
+tmp_root=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU
+=== FIGMA WORKER SPAWN ===
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/home/data/figma-worker-z1/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/fake/fakebin/timeout: line 3: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned figma-worker-z1 harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-figma-worker-z1 worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/wt
+launch=PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/fake/fakebin/pi' --tui-mode regular --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/home/state/figma-worker-z1.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SWT2HXR9NMWC6VG08B3AGH/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/home/data/figma-worker-z1/launch-brief.md')"
+PASS figma worker inherits figma-console file in exclusive mode
+PASS figma worker child argv/env received exclusive mcp-config
+figma exclusive load={"exclusive":true,"mcpPath":"/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/home/.pi/mcp.json","servers":["figma-console"]}
+PASS exclusive load of figma worker flags keeps only figma-console
+=== JIRA WORKER SPAWN ===
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/jira-inherit/home/data/jira-worker-z2/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/jira-inherit/fake/fakebin/timeout: line 3: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/jira-inherit/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned jira-worker-z2 harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-jira-worker-z2 worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/jira-inherit/wt
+jira exclusive load={"exclusive":true,"mcpPath":"/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/jira-inherit/home/.pi/mcp.json","servers":["mcp-atlassian"]}
+PASS jira second-mate workers inherit mcp-atlassian only
+=== PRIMARY WORKER SPAWN ===
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/primary-noinherit/home/data/primary-worker-z3/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/primary-noinherit/fake/fakebin/timeout: line 3: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/primary-noinherit/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned primary-worker-z3 harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-primary-worker-z3 worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/primary-noinherit/wt
+PASS primary workers do not inherit second-mate private MCP
+=== FIGMA CLAUDE REFUSAL ===
+status=1
+error: this home's private MCP cannot be inherited by harness 'claude'; use --harness pi or pi-signed
+PASS non-Pi Figma worker refused before mutation
+=== FIGMA SCOUT SPAWN ===
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-scout/fake/fakebin/timeout: line 3: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-scout/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned figma-scout-z5 harness=pi kind=scout window=firstmate:fm-figma-scout-z5 worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-scout/wt
+PASS figma scout inherits private figma MCP
+ALL LIVE SCENARIOS PASSED

@@ -1,0 +1,4 @@
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/home/data/figma-worker-z1/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/fake/fakebin/timeout: line 3: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/fake/fakebin/timeout: line 3: exec: 1: not found
+spawned figma-worker-z1 harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-figma-worker-z1 worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/live-secondmate-mcp.bNJ7XU/figma-inherit/wt
