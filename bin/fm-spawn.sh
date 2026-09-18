@@ -2393,22 +2393,6 @@ path_is_ancestor_of() {
   return 1
 }
 
-spawn_private_mcp_link_count() {
-  if [ "$(uname -s)" = Darwin ]; then
-    /usr/bin/stat -f %l "$1" 2>/dev/null
-  else
-    stat -c %h "$1" 2>/dev/null
-  fi
-}
-
-spawn_private_mcp_mode() {
-  if [ "$(uname -s)" = Darwin ]; then
-    /usr/bin/stat -f %Lp "$1" 2>/dev/null
-  else
-    stat -c %a "$1" 2>/dev/null
-  fi
-}
-
 # Ship/scout (and relaunch) from a seeded second-mate home: inherit that home's
 # safe private .pi/mcp.json onto canonical Pi workers, or refuse. Header above
 # owns the contract. Leaves PIMCPFLAG and PI_MCP_EXCLUSIVE empty when the home
@@ -2456,7 +2440,7 @@ spawn_secondmate_private_mcp_prepare() {
     echo "error: secondmate private MCP is not a regular file: $mcp" >&2
     return 1
   fi
-  links=$(spawn_private_mcp_link_count "$mcp") || {
+  links=$(fm_inherit_file_link_count "$mcp") || {
     echo "error: secondmate private MCP could not be inspected: $mcp" >&2
     return 1
   }
@@ -2464,7 +2448,7 @@ spawn_secondmate_private_mcp_prepare() {
     echo "error: secondmate private MCP is not a single-link file: $mcp" >&2
     return 1
   fi
-  mode=$(spawn_private_mcp_mode "$mcp") || {
+  mode=$(fm_inherit_file_mode "$mcp") || {
     echo "error: secondmate private MCP mode could not be inspected: $mcp" >&2
     return 1
   }
