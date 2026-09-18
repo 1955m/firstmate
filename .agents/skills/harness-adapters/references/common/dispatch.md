@@ -14,6 +14,7 @@ Its harness consequence is that a secondmate's workers receive literal `config/c
 A concrete crew value such as `codex` carries that runtime into the secondmate home.
 Unset or `default` carries no concrete value, so its workers use that home's own or detected harness rather than the primary's effective crew harness.
 The inherited dispatch file applies the same best-fit profiles there.
+A seeded second-mate home with private `.pi/mcp.json` adds a separate worker-launch constraint owned by [Secondmate private MCP](../../../../../docs/configuration.md#secondmate-private-mcp), not by inherited local material.
 
 ## Owners
 

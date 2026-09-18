@@ -292,7 +292,7 @@ A local standalone-clone home cannot receive a primary-local commit through that
 ## Secondmate private MCP
 
 A seeded second-mate home may keep a private Pi MCP config at `.pi/mcp.json`.
-That file stays in the home.
+That file stays in that home and is not part of the inherited-local-material allowlist owned by [`secondmate-provisioning`](../.agents/skills/secondmate-provisioning/SKILL.md).
 Firstmate never copies it or its credentials into a project worktree.
 When the file is present and safe, every Pi or Pi-signed ship or scout that home launches, including relaunches, receives that exact file in Pi exclusive-config mode so global, primary, unrelated-home, and project-local MCP sources cannot leak into the worker.
 The primary home and any home without the second-mate identity marker do not inherit this behavior from merely having `.pi/mcp.json`.
