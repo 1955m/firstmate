@@ -1,0 +1,4 @@
+root=/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/mcp-consumer-18995
+private_file=/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/mcp-consumer-18995/secondmate-home/.pi/mcp.json
+CONSUMER_MERGED_NO_EXCLUSIVE=figma-console,mcp-atlassian,project-local-server
+CONSUMER_EXCLUSIVE=figma-console

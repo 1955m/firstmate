@@ -1,0 +1,308 @@
+baseline: repo test suite tests/fm-spawn-secondmate-mcp.test.sh
+repo suite exit=0
+ok - seeded second-mate Pi workers inherit the home MCP in exclusive mode
+ok - worker relaunch inherits the second-mate private MCP
+ok - primary homes do not inherit merely because .pi/mcp.json exists
+ok - unrelated second-mate homes cannot leak MCP config into each other's workers
+ok - second-mate homes without private MCP keep the existing worker launch
+ok - unsafe private MCP refuses before endpoint, worktree, or task record mutation
+ok - non-Pi workers are refused rather than launched without required MCP capability
+# all fm-spawn-secondmate-mcp tests passed
+
+=== Scenario 1: Figma second-mate home Pi workers inherit the private Figma MCP ===
+--- live-figma-pi-ship (rc=0) ---
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/data/live-figma-pi-ship/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-figma-pi-ship harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-live-figma-pi-ship worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/wt
+PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/fake/fakebin/pi' --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/state/live-figma-pi-ship.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/data/live-figma-pi-ship/launch-brief.md')"
+=== pi ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=exclusive
+argv=--mcp-config /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/.pi/mcp.json -e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/state/live-figma-pi-ship.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/state/live-figma-pi-ship.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Ship the Figma console fix
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+
+# Current no-mistakes intent contract
+This section supersedes every earlier brief instruction about constructing `--intent`, but not later clarifications actually supplied by the captain.
+Use everything under `## Captain intent authorized for --intent` through the end of this brief, including any nested subheadings but excluding that heading, plus any later words the captain actually supplied as `--intent`; never include Firstmate specification or other mixed Task content.
+Preserve those words without adding speaker labels or direct address.
+Firstmate-authored constraints, acceptance criteria, implementation details, decisions, and tradeoffs are specification, not captain intent.
+The Definition of done's rule that `--intent` must be self-sufficient still governs the string you pass: resolve any report, decision, or PR the intent below refers to into its substance rather than passing the pointer.
+
+## Captain intent authorized for --intent
+Ship the Figma console fix
+mcp_config_path=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/.pi/mcp.json
+mcp_config_realpath=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-ship/home/.pi/mcp.json
+mcp_servers=figma-console
+
+PASS: live-figma-pi-ship inherited figma-console only
+--- live-figma-pi-scout (rc=0) ---
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-figma-pi-scout harness=pi kind=scout window=firstmate:fm-live-figma-pi-scout worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/wt
+PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/fake/fakebin/pi' --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/state/live-figma-pi-scout.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/data/live-figma-pi-scout/launch-brief.md')"
+=== pi ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=exclusive
+argv=--mcp-config /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/.pi/mcp.json -e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/state/live-figma-pi-scout.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/state/live-figma-pi-scout.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Ship the Figma console fix
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+mcp_config_path=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/.pi/mcp.json
+mcp_config_realpath=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-scout/home/.pi/mcp.json
+mcp_servers=figma-console
+
+PASS: live-figma-pi-scout inherited figma-console only
+--- live-figma-pi-signed-ship (rc=0) ---
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/data/live-figma-pi-signed-ship/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-figma-pi-signed-ship harness=pi-signed kind=ship mode=no-mistakes yolo=off window=firstmate:fm-live-figma-pi-signed-ship worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/wt
+PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi-signed '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/fake/fakebin/pi-signed' --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/state/live-figma-pi-signed-ship.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/data/live-figma-pi-signed-ship/launch-brief.md')"
+=== pi-signed ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=exclusive
+argv=--mcp-config /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/.pi/mcp.json -e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/state/live-figma-pi-signed-ship.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/state/live-figma-pi-signed-ship.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Ship the Figma console fix
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+
+# Current no-mistakes intent contract
+This section supersedes every earlier brief instruction about constructing `--intent`, but not later clarifications actually supplied by the captain.
+Use everything under `## Captain intent authorized for --intent` through the end of this brief, including any nested subheadings but excluding that heading, plus any later words the captain actually supplied as `--intent`; never include Firstmate specification or other mixed Task content.
+Preserve those words without adding speaker labels or direct address.
+Firstmate-authored constraints, acceptance criteria, implementation details, decisions, and tradeoffs are specification, not captain intent.
+The Definition of done's rule that `--intent` must be self-sufficient still governs the string you pass: resolve any report, decision, or PR the intent below refers to into its substance rather than passing the pointer.
+
+## Captain intent authorized for --intent
+Ship the Figma console fix
+mcp_config_path=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/.pi/mcp.json
+mcp_config_realpath=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-ship/home/.pi/mcp.json
+mcp_servers=figma-console
+
+PASS: live-figma-pi-signed-ship inherited figma-console only
+--- live-figma-pi-signed-scout (rc=0) ---
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-figma-pi-signed-scout harness=pi-signed kind=scout window=firstmate:fm-live-figma-pi-signed-scout worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/wt
+PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi-signed '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/fake/fakebin/pi-signed' --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/state/live-figma-pi-signed-scout.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/data/live-figma-pi-signed-scout/launch-brief.md')"
+=== pi-signed ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=exclusive
+argv=--mcp-config /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/.pi/mcp.json -e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/state/live-figma-pi-signed-scout.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/state/live-figma-pi-signed-scout.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Ship the Figma console fix
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+mcp_config_path=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/.pi/mcp.json
+mcp_config_realpath=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/figma-pi-signed-scout/home/.pi/mcp.json
+mcp_servers=figma-console
+
+PASS: live-figma-pi-signed-scout inherited figma-console only
+=== Scenario 2: Jira second-mate home gets mcp-atlassian, never figma-console ===
+--- live-jira-ship (rc=0) ---
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/data/live-jira-ship/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-jira-ship harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-live-jira-ship worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/wt
+PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/fake/fakebin/pi' --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/state/live-jira-ship.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/data/live-jira-ship/launch-brief.md')"
+=== pi ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=exclusive
+argv=--mcp-config /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/.pi/mcp.json -e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/state/live-jira-ship.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/state/live-jira-ship.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Ship the BES Jira change
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+
+# Current no-mistakes intent contract
+This section supersedes every earlier brief instruction about constructing `--intent`, but not later clarifications actually supplied by the captain.
+Use everything under `## Captain intent authorized for --intent` through the end of this brief, including any nested subheadings but excluding that heading, plus any later words the captain actually supplied as `--intent`; never include Firstmate specification or other mixed Task content.
+Preserve those words without adding speaker labels or direct address.
+Firstmate-authored constraints, acceptance criteria, implementation details, decisions, and tradeoffs are specification, not captain intent.
+The Definition of done's rule that `--intent` must be self-sufficient still governs the string you pass: resolve any report, decision, or PR the intent below refers to into its substance rather than passing the pointer.
+
+## Captain intent authorized for --intent
+Ship the BES Jira change
+mcp_config_path=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/.pi/mcp.json
+mcp_config_realpath=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/jira-pi-ship/home/.pi/mcp.json
+mcp_servers=mcp-atlassian
+
+PASS: jira worker received mcp-atlassian only
+=== Scenario 3: Figma and Jira second-mate homes cannot cross-leak ===
+home A worker probe: mcp_servers=figma-console
+home B mcp path: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/cross-a/home-b/.pi/mcp.json
+home A launch did not reference home B: 0 references
+PASS: homes stay isolated
+=== Scenario 4: primary home and unmarked home do not inherit ===
+--- live-primary (rc=0) ---
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/home/data/live-primary/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-primary harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-live-primary worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/wt
+env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/fake/fakebin/pi' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/home/state/live-primary.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/home/data/live-primary/launch-brief.md')"
+=== pi ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=<unset>
+argv=-e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/home/state/live-primary.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/primary-pi/home/state/live-primary.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Primary-directory worker
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+
+# Current no-mistakes intent contract
+This section supersedes every earlier brief instruction about constructing `--intent`, but not later clarifications actually supplied by the captain.
+Use everything under `## Captain intent authorized for --intent` through the end of this brief, including any nested subheadings but excluding that heading, plus any later words the captain actually supplied as `--intent`; never include Firstmate specification or other mixed Task content.
+Preserve those words without adding speaker labels or direct address.
+Firstmate-authored constraints, acceptance criteria, implementation details, decisions, and tradeoffs are specification, not captain intent.
+The Definition of done's rule that `--intent` must be self-sufficient still governs the string you pass: resolve any report, decision, or PR the intent below refers to into its substance rather than passing the pointer.
+
+## Captain intent authorized for --intent
+Primary-directory worker
+mcp_config_path=<none>
+
+PASS: primary/unmarked home launch unchanged
+=== Scenario 5: second-mate home without .pi/mcp.json keeps today's launch ===
+--- live-nomcp (rc=0) ---
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/home/data/live-nomcp/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-nomcp harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-live-nomcp worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/wt
+env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/fake/fakebin/pi' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/home/state/live-nomcp.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/nomcp-pi/home/data/live-nomcp/launch-brief.md')"
+
+PASS: no-mcp secondmate launch unchanged
+=== Scenario 6: relaunch re-inherits the private Figma MCP ===
+--- live-relaunch (rc=0) ---
+warning: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/data/live-relaunch/launch-brief.md records no delivery contract line (scaffolded before ship briefs recorded one); launching on the explicit --mode no-mistakes - confirm its definition of done matches
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/fake/fakebin/timeout: line 4: exec: 1: not found
+/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/fake/fakebin/timeout: line 4: exec: 1: not found
+spawned live-relaunch harness=pi kind=ship mode=no-mistakes yolo=off window=firstmate:fm-live-relaunch worktree=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/wt
+unset TRACEPARENT; PI_MCP_CONFIG_MODE=exclusive env -u CURSOR_AGENT -u CURSOR_INVOKED_AS -u GEMINI_CLI FM_PI_HARNESS=pi '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/fake/fakebin/pi' --mcp-config '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/.pi/mcp.json' -e '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/state/live-relaunch.pi-ext.ts' "$('/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J/bin/fm-operational-input.sh' encode launch-brief < '/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/data/live-relaunch/launch-brief.md')"
+=== pi ===
+cwd=/Users/u/.no-mistakes/worktrees/2fdd8f23a65a/01M2SV81PWS03D5EWQXV4ME45J
+PI_MCP_CONFIG_MODE=exclusive
+argv=--mcp-config /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/.pi/mcp.json -e /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/state/live-relaunch.pi-ext.ts ⁣FIRSTMATE_OP: v1 launch-brief: # Current worker role contract
+You are a crewmate: an autonomous worker agent managed by firstmate.
+This section establishes your current identity before every project or task instruction below and supersedes any conflicting role identity in those instructions.
+Do the assigned work yourself and report only to firstmate; do not adopt a firstmate or secondmate supervisor identity, delegate the task, run fleet supervision, or address the captain.
+Your steering inbox is `/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/state/live-relaunch.inbox`; this exact path belongs to your current task even when it is outside the worktree or under the supervising firstmate home, so read and acknowledge its messages and do not reject it as another home's state.
+Never inspect or change any other home's endpoint namespace; this authorization is limited to the exact task paths named by this brief.
+When this task works on Firstmate itself, the repository root `AGENTS.md` (also imported by `CLAUDE.md`) is project content and the supervisor contract for the firstmate managing you: follow this brief instead of that supervisor contract.
+Project instructions still govern the work wherever they do not conflict with this worker identity, including `CONTRIBUTING.md` and `firstmate-coding-guidelines` for Firstmate changes.
+
+# Task
+## Captain's intent
+Figma worker to relaunch
+
+## Firstmate spec
+Exercise the spawn behavior under test.
+
+# Current no-mistakes intent contract
+This section supersedes every earlier brief instruction about constructing `--intent`, but not later clarifications actually supplied by the captain.
+Use everything under `## Captain intent authorized for --intent` through the end of this brief, including any nested subheadings but excluding that heading, plus any later words the captain actually supplied as `--intent`; never include Firstmate specification or other mixed Task content.
+Preserve those words without adding speaker labels or direct address.
+Firstmate-authored constraints, acceptance criteria, implementation details, decisions, and tradeoffs are specification, not captain intent.
+The Definition of done's rule that `--intent` must be self-sufficient still governs the string you pass: resolve any report, decision, or PR the intent below refers to into its substance rather than passing the pointer.
+
+## Captain intent authorized for --intent
+Figma worker to relaunch
+mcp_config_path=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/.pi/mcp.json
+mcp_config_realpath=/private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/relaunch-pi/home/.pi/mcp.json
+mcp_servers=figma-console
+
+PASS: relaunch re-inherited the private Figma MCP
+=== Scenario 7: non-Pi runtime refuses when the private MCP is present ===
+--- live-nonpi claude (rc=1) ---
+error: this home's private MCP cannot be inherited by harness 'claude'; use --harness pi or pi-signed
+launchlog bytes:        0
+task meta exists: no
+launch brief exists: no
+
+PASS: non-Pi runtime refused before launch
+=== Scenario 8: unsafe private MCP refuses before mutation ===
+--- symlink (rc=1) ---
+error: secondmate private MCP is a symlink: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/unsafe-symlink/home/.pi/mcp.json
+launchlog bytes:        0; endpoint: absent; meta: no
+
+PASS: symlink refused without mutation
+--- mode (rc=1) ---
+error: secondmate private MCP must be mode 0600: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/unsafe-mode/home/.pi/mcp.json
+launchlog bytes:        0; endpoint: absent; meta: no
+
+PASS: mode refused without mutation
+--- hardlink (rc=1) ---
+error: secondmate private MCP is not a single-link file: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/unsafe-hardlink/home/.pi/mcp.json
+launchlog bytes:        0; endpoint: absent; meta: no
+
+PASS: hardlink refused without mutation
+--- escape (rc=1) ---
+error: secondmate private MCP directory is a symlink: /private/var/folders/85/cqj_mlv52h72k28y5z6zr0yh0000gn/T/fm-mcp-live.fJUtIK/unsafe-escape/home/.pi
+launchlog bytes:        0; endpoint: absent; meta: no
+
+PASS: escape refused without mutation
+ALL LIVE SCENARIOS COMPLETED

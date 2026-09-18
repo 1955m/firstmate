@@ -1,0 +1,8 @@
+ok - seeded second-mate Pi workers inherit the home MCP in exclusive mode
+ok - worker relaunch inherits the second-mate private MCP
+ok - primary homes do not inherit merely because .pi/mcp.json exists
+ok - unrelated second-mate homes cannot leak MCP config into each other's workers
+ok - second-mate homes without private MCP keep the existing worker launch
+ok - unsafe private MCP refuses before endpoint, worktree, or task record mutation
+ok - non-Pi workers are refused rather than launched without required MCP capability
+# all fm-spawn-secondmate-mcp tests passed
